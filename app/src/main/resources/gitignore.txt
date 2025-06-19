@@ -1,0 +1,14 @@
+# Minecraft plugin defaults
+logs/
+*.log
+*.tmp
+*.lock
+*.bak
+*.swp
+cache/
+debug/
+.idea/
+*.iml
+*.class
+target/
+build/
