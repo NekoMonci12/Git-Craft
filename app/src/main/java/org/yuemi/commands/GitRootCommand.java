@@ -12,9 +12,9 @@ public class GitRootCommand implements CommandExecutor {
     private final JavaPlugin plugin;
     private final SubcommandHandler handler;
 
-    public GitRootCommand(JavaPlugin plugin) {
+    public GitRootCommand(JavaPlugin plugin, String filePassword, String dbPassword) {
         this.plugin = plugin;
-        this.handler = new SubcommandHandler(plugin);
+        this.handler = new SubcommandHandler(plugin, filePassword, dbPassword);
     }
 
     @Override

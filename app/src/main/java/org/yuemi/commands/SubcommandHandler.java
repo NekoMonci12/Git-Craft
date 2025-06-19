@@ -12,14 +12,21 @@ import org.yuemi.commands.subcommands.GitFetchSubcommand;
 import org.yuemi.commands.subcommands.GitPullSubcommand;
 import org.yuemi.commands.subcommands.GitStatusSubcommand;
 import org.yuemi.commands.subcommands.GitHelpSubcommand;
+import org.yuemi.commands.subcommands.GitLoginSubcommand;
+import org.yuemi.commands.subcommands.GitWhoamiSubcommand;
+import org.yuemi.commands.subcommands.GitLogoutSubcommand;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SubcommandHandler {
 
     private final Map<String, SubcommandExecutor> commands = new HashMap<>();
-
-    public SubcommandHandler(JavaPlugin plugin) {
+    private final String filePassword;
+    private final String dbPassword;
+    
+    public SubcommandHandler(JavaPlugin plugin, String filePassword, String dbPassword) {
+        this.filePassword = filePassword;
+        this.dbPassword = dbPassword;
         commands.put("add", new GitAddSubcommand(plugin));
         commands.put("commit", new GitCommitSubcommand(plugin));
         commands.put("push", new GitPushSubcommand(plugin));
@@ -30,6 +37,9 @@ public class SubcommandHandler {
         commands.put("pull", new GitPullSubcommand(plugin));
         commands.put("status", new GitStatusSubcommand(plugin));
         commands.put("help", new GitHelpSubcommand(plugin));
+        commands.put("login", new GitLoginSubcommand(plugin, filePassword, dbPassword));
+        commands.put("whoami", new GitWhoamiSubcommand(plugin, filePassword, dbPassword));
+        commands.put("logout", new GitLogoutSubcommand(plugin, filePassword, dbPassword));
     }
 
     public void handle(CommandSender sender, String name, String[] args) {

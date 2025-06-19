@@ -1,6 +1,8 @@
 package org.yuemi.commands;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yuemi.git.H2PasswordProvider;
+import org.yuemi.commands.GitRootCommand;
 
 public class CommandRegistrar {
 
@@ -11,6 +13,16 @@ public class CommandRegistrar {
     }
 
     public void registerAll() {
-        plugin.getCommand("git").setExecutor(new GitRootCommand(plugin));
+        try {
+            H2PasswordProvider provider = new H2PasswordProvider(plugin.getDataFolder());
+            String[] passwords = provider.getOrGeneratePasswords();
+            String filePassword = passwords[0];
+            String dbPassword = passwords[1];
+
+            plugin.getCommand("git").setExecutor(new GitRootCommand(plugin, filePassword, dbPassword));
+
+        } catch (Exception e) {
+            plugin.getLogger().severe("§cFailed to initialize Git command: " + e.getMessage());
+        }
     }
 }
