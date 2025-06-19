@@ -1,0 +1,13 @@
+name: GitCraft
+main: org.yuemi.App
+authors:
+  - NekoMonci12
+version: 1.0
+api-version: 1.21
+commands:
+  gitclone:
+    description: Clones a Git repository
+  gitcommit:
+    description: Commits all changes
+  gitpush:
+    description: Pushes to remote
