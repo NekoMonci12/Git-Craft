@@ -29,14 +29,14 @@ public class SubcommandHandler {
         this.dbPassword = dbPassword;
         commands.put("add", new GitAddSubcommand(plugin));
         commands.put("commit", new GitCommitSubcommand(plugin));
-        commands.put("push", new GitPushSubcommand(plugin));
         commands.put("reset", new GitResetSubcommand(plugin));
         commands.put("init", new GitInitSubcommand(plugin));
         commands.put("remote", new GitRemoteSubcommand(plugin));
-        commands.put("fetch", new GitFetchSubcommand(plugin));
-        commands.put("pull", new GitPullSubcommand(plugin));
         commands.put("status", new GitStatusSubcommand(plugin));
         commands.put("help", new GitHelpSubcommand(plugin));
+        commands.put("push", new GitPushSubcommand(plugin, filePassword, dbPassword));
+        commands.put("fetch", new GitFetchSubcommand(plugin, filePassword, dbPassword));
+        commands.put("pull", new GitPullSubcommand(plugin, filePassword, dbPassword));
         commands.put("login", new GitLoginSubcommand(plugin, filePassword, dbPassword));
         commands.put("whoami", new GitWhoamiSubcommand(plugin, filePassword, dbPassword));
         commands.put("logout", new GitLogoutSubcommand(plugin, filePassword, dbPassword));
