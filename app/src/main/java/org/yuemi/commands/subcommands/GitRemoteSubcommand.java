@@ -39,21 +39,36 @@ public class GitRemoteSubcommand implements SubcommandExecutor {
             try {
                 GitManager git = new GitManager(repoFolder);
 
+                boolean allowUnsafe = plugin.getConfig().getBoolean("disable-unsafe-warning", false);
+
+                if ((mode.equals("add") || mode.equals("set")) && url != null) {
+                    if (!allowUnsafe && (url.contains("github.com") || url.contains("gitlab.com"))) {
+                        sender.sendMessage("§cRemote URL rejected: Public Git hosts like GitHub or GitLab are disallowed.");
+                        sender.sendMessage("§7To allow them, set §fdisable-unsafe-warning: true §7in config.yml");
+                        return;
+                    }
+                }
+
                 switch (mode) {
-                    case "add":
+                    case "add" -> {
                         if (url == null) throw new IllegalArgumentException("Missing --url");
                         git.addRemote(url);
                         sender.sendMessage("§aAdded remote origin: " + url);
-                        break;
-                    case "set":
+                    }
+                    case "set" -> {
                         if (url == null) throw new IllegalArgumentException("Missing --url");
                         git.setRemoteUrl(url);
                         sender.sendMessage("§aUpdated remote origin URL to: " + url);
-                        break;
-                    case "remove":
+                    }
+                    case "remove" -> {
                         git.removeRemote();
                         sender.sendMessage("§aRemoved remote origin.");
-                        break;
+                    }
+                }
+
+                if ((mode.equals("add") || mode.equals("set")) && url != null && !allowUnsafe) {
+                    sender.sendMessage("§eWarning: Using public git hosts is discouraged.");
+                    sender.sendMessage("§7Please use a self-hosted alternative like §fGitea§7, §fGogs§7, or §fForgejo§7.");
                 }
 
             } catch (Exception e) {

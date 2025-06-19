@@ -1,0 +1,2 @@
+# WARNING: Disabling this allows users to push to public Git hosts (GitHub, GitLab, etc.)
+disable-unsafe-warning: false
