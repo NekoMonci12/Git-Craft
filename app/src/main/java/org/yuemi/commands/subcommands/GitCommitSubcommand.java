@@ -21,12 +21,21 @@ public class GitCommitSubcommand implements SubcommandExecutor {
             File repoFolder = new File(".");
             String message = "Commit from Minecraft";
 
-            for (String arg : args) {
+            for (int i = 0; i < args.length; i++) {
+                String arg = args[i];
                 if (arg.startsWith("--path=")) {
                     repoFolder = new File(arg.substring("--path=".length()));
-                } else if (arg.startsWith("--message=") || arg.startsWith("-m=")) {
-                    message = arg.contains("=") ? arg.split("=", 2)[1] : message;
+                } else if (arg.startsWith("--message=")) {
+                    message = arg.substring("--message=".length());
+                } else if (arg.equals("-m") && i + 1 < args.length) {
+                    message = args[i + 1];
+                    i++; // Skip next token
                 }
+            }
+
+            if (message.length() > 50) {
+                sender.sendMessage("§cCommit message must not exceed 50 characters.");
+                return;
             }
 
             try {
