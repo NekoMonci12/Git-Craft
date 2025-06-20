@@ -22,16 +22,25 @@ public class GitCommitSubcommand implements SubcommandExecutor {
             File repoFolder = new File(".");
             String message = "Commit from Minecraft";
 
+            StringBuilder messageBuilder = new StringBuilder();
             for (int i = 0; i < args.length; i++) {
                 String arg = args[i];
                 if (arg.startsWith("--path=")) {
                     repoFolder = new File(arg.substring("--path=".length()));
                 } else if (arg.startsWith("--message=")) {
-                    message = arg.substring("--message=".length());
-                } else if (arg.equals("-m") && i + 1 < args.length) {
-                    message = args[i + 1];
-                    i++; // Skip next token
+                    messageBuilder.append(arg.substring("--message=".length())).append(" ");
+                } else if (arg.startsWith("-m=")) {
+                    messageBuilder.append(arg.substring("-m=".length())).append(" ");
+                } else if (arg.equals("-m") || arg.equals("--message")) {
+                    for (int j = i + 1; j < args.length; j++) {
+                        messageBuilder.append(args[j]).append(" ");
+                    }
+                    break;
                 }
+            }
+
+            if (messageBuilder.length() > 0) {
+                message = messageBuilder.toString().trim();
             }
 
             if (message.length() > 50) {
