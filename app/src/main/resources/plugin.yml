@@ -8,3 +8,31 @@ commands:
   git:
     description: Git subcommand dispatcher
     usage: /git <add|commit|push|clone>
+permissions:
+  gitcraft.command.add:
+    default: op
+  gitcraft.command.commit:
+    default: op
+  gitcraft.command.reset:
+    default: op
+  gitcraft.command.init:
+    default: op
+  gitcraft.command.remote:
+    default: op
+  gitcraft.command.status:
+    default: op
+  gitcraft.command.help:
+    default: op
+  gitcraft.command.push:
+    default: op
+  gitcraft.command.fetch:
+    default: op
+  gitcraft.command.pull:
+    default: op
+  gitcraft.command.login:
+    default: op
+  gitcraft.command.whoami:
+    default: op
+  gitcraft.command.logout:
+    default: op
+

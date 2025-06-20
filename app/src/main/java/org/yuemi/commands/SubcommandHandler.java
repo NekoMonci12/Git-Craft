@@ -23,23 +23,24 @@ public class SubcommandHandler {
     private final Map<String, SubcommandExecutor> commands = new HashMap<>();
     private final String filePassword;
     private final String dbPassword;
+    private final Map<String, String> permissions = new HashMap<>();
     
     public SubcommandHandler(JavaPlugin plugin, String filePassword, String dbPassword) {
         this.filePassword = filePassword;
         this.dbPassword = dbPassword;
-        commands.put("add", new GitAddSubcommand(plugin));
-        commands.put("commit", new GitCommitSubcommand(plugin));
-        commands.put("reset", new GitResetSubcommand(plugin));
-        commands.put("init", new GitInitSubcommand(plugin));
-        commands.put("remote", new GitRemoteSubcommand(plugin));
-        commands.put("status", new GitStatusSubcommand(plugin));
-        commands.put("help", new GitHelpSubcommand(plugin));
-        commands.put("push", new GitPushSubcommand(plugin, filePassword, dbPassword));
-        commands.put("fetch", new GitFetchSubcommand(plugin, filePassword, dbPassword));
-        commands.put("pull", new GitPullSubcommand(plugin, filePassword, dbPassword));
-        commands.put("login", new GitLoginSubcommand(plugin, filePassword, dbPassword));
-        commands.put("whoami", new GitWhoamiSubcommand(plugin, filePassword, dbPassword));
-        commands.put("logout", new GitLogoutSubcommand(plugin, filePassword, dbPassword));
+        register("add", new GitAddSubcommand(plugin));
+        register("commit", new GitCommitSubcommand(plugin));
+        register("reset", new GitResetSubcommand(plugin));
+        register("init", new GitInitSubcommand(plugin));
+        register("remote", new GitRemoteSubcommand(plugin));
+        register("status", new GitStatusSubcommand(plugin));
+        register("help", new GitHelpSubcommand(plugin));
+        register("push", new GitPushSubcommand(plugin, filePassword, dbPassword));
+        register("fetch", new GitFetchSubcommand(plugin, filePassword, dbPassword));
+        register("pull", new GitPullSubcommand(plugin, filePassword, dbPassword));
+        register("login", new GitLoginSubcommand(plugin, filePassword, dbPassword));
+        register("whoami", new GitWhoamiSubcommand(plugin, filePassword, dbPassword));
+        register("logout", new GitLogoutSubcommand(plugin, filePassword, dbPassword));
     }
 
     public void handle(CommandSender sender, String name, String[] args) {
@@ -49,6 +50,17 @@ public class SubcommandHandler {
             return;
         }
 
+        String permission = permissions.get(name.toLowerCase());
+        if (permission != null && !sender.hasPermission(permission)) {
+            sender.sendMessage("§cYou do not have permission to run /git " + name);
+            return;
+        }
+
         executor.execute(sender, args);
+    }
+
+    private void register(String name, SubcommandExecutor executor) {
+        commands.put(name, executor);
+        permissions.put(name, "gitcraft.command." + name);
     }
 }
