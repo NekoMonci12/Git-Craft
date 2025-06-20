@@ -2,7 +2,7 @@ name: GitCraft
 main: org.yuemi.App
 authors:
   - NekoMonci12
-version: 1.0
+version: 1.0.1
 api-version: 1.21
 commands:
   git:
