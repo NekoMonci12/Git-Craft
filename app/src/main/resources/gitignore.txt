@@ -1,14 +1,62 @@
-# Minecraft plugin defaults
-logs/
-*.log
+# Ignore archive file types
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.tar.bz2
+*.tbz
+*.7z
+*.rar
+*.gz
+*.xz
+*.lz
+*.lzma
+*.Z
+*.war
+*.ear
+*.db
+*.bin
+
+# Ignore Libraries Folder
+plugins/.paper-remapped/
+**/lib/
+**/libs/
+**/libraries/
+
+# Ignore Not Important Folder
+**/advancements/
+**/cache*/
+*.mca
+*.pregion
+*.pem
+*.bd
 *.tmp
-*.lock
+*.key
+*.nbt
 *.bak
-*.swp
-cache/
-debug/
-.idea/
-*.iml
-*.class
-target/
-build/
+.console_history
+.cache/
+plugins/Essentials/userdata/
+oreobfuscator_cache/
+world*/
+versions/
+
+# Ignore Logs Files
+**/logs/
+**/Logs/
+*.log
+
+# Ignore Player Data
+**/sqlite*
+*.dat
+*.dat_old
+
+# Ignore Always Updated Files
+ops.json
+usercache.json
+version_history.json
+eula.txt
+
+# Ignore Plugins
+plugins/bStats/
+plugins/pStats/
