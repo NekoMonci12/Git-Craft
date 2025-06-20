@@ -2,6 +2,7 @@ package org.yuemi.commands.subcommands;
 
 import org.yuemi.commands.SubcommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yuemi.git.GitManager;
 
@@ -38,10 +39,20 @@ public class GitCommitSubcommand implements SubcommandExecutor {
                 return;
             }
 
+            String authorName;
+            String authorEmail;
+            if (sender instanceof Player player) {
+                authorName = player.getName();
+                authorEmail = player.getName().toLowerCase() + "@server.local";
+            } else {
+                authorName = "Console";
+                authorEmail = "console@localhost";
+            }
+
             try {
                 GitManager git = new GitManager(repoFolder);
-                git.commit(message);
-                sender.sendMessage("§aCommitted: §f" + message);
+                git.commit(message, authorName, authorEmail);
+                sender.sendMessage("§aCommitted as §f" + authorName + " §a→ §f" + message);
             } catch (Exception e) {
                 sender.sendMessage("§cGit commit failed: " + e.getMessage());
                 e.printStackTrace();

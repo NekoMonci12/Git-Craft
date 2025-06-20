@@ -53,11 +53,11 @@ public class GitManager {
         add.call();
     }
 
-    public void commit(String message) throws Exception {
+    public void commit(String message, String authorName, String authorEmail) throws Exception {
         getOrOpenGit()
                 .commit()
                 .setMessage(message)
-                .setAuthor("Minecraft", "mc@localhost")
+                .setAuthor(authorName, authorEmail)
                 .call();
     }
 
