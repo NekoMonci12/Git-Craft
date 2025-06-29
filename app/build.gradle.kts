@@ -1,6 +1,6 @@
 plugins {
     java
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "8.3.7"
 }
 
 group = "org.yuemi"
@@ -32,6 +32,7 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
     archiveBaseName.set("Git-Craft")
     archiveClassifier.set("")
     archiveVersion.set("")
+    relocate("org.bstats", "org.yuemi.libs.bstats") 
 }
 
 // Make build depend on shadowJar
